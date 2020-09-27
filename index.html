@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+</head>
+
+<body>
+    <p id="p">hello world</p>
+    <canvas id="canvas" width="600" height="600" style="border:solid 1px navy;"></canvas>
+</body>
+<script>
+    var p = document.getElementById("p")
+    /**
+     * @type {HTMLCanvasElement}
+     */
+    var canvas = document.getElementById("canvas")
+    var ctx = canvas.getContext("2d")
+    const width = canvas.width
+    const height = canvas.height
+
+    var x = width / 2
+    var y = height / 2
+    var t = 0
+    var dir = 0
+    var now_dir = 0
+    var len = 5
+    var snake = []
+    var run = true
+    var unrun = false
+    var speed = 10
+
+    for (i in len)
+        snake.push([x, y])
+
+    var fx = Math.floor(Math.random() * (width / 20)) * 20
+    var fy = Math.floor(Math.random() * (height / 20)) * 20
+    var food = []
+    food.push(fx, fy)
+
+    function newFood() {
+        var Random
+        for (i in food) {
+            Random = Math.floor(Math.random() * (width / 20)) * 20
+            while (Random == x && Random == y) {
+                Random = Math.floor(Math.random() * (width / 20)) * 20
+            }
+            food[i] = Random
+        }
+    }
+    function GameLoop() {
+        if (run) {
+        p.textContent = 'Score:' + Math.floor(t / 10)
+        if (t % speed == 0) {
+            if (dir == 0) {
+                x += 20
+                if (x == width)
+                x = 0
+            }
+            if (dir == 1) {
+                y += 20
+                if (y == height)
+                y = 0
+            }
+            
+            if (dir == 2) {
+                x -= 20
+                if (x < 0)
+                x = width - 20
+            }
+            
+            if (dir == 3) {
+                y -= 20
+                if (y < 0)
+                y = height - 20
+            }
+            for (body of snake) {
+                if (x == body[0] && y == body[1]) {
+                    run = false
+                    p.textContent = 'GameOver'
+                    console.log(run)
+                    return
+                }
+                
+            }
+            if (x == food[0] && y == food[1]) {
+                if (len % 5 == 0) speed--
+                newFood()
+                len++
+            }
+            now_dir = dir
+            
+            snake.push([x, y])
+            while (snake.length > len)
+            snake.shift()
+
+
+            ctx.clearRect(0, 0, width, height)
+            for (i of snake) {
+                ctx.fillStyle = "brown"
+                ctx.fillRect(...i, 20, 20)
+            }
+
+            ctx.fillStyle = 'orange'
+            ctx.fillRect(...food, 20, 20)
+
+        }
+
+        
+        }
+            setTimeout(() => {
+                GameLoop()
+            }, 20);
+
+
+        t++
+    }
+
+    GameLoop()
+    var reg = 0
+
+    function ifkeydown(k) {
+        var old_dir = now_dir
+        if (k.key == 'ArrowRight') dir = 0
+        if (k.key == 'ArrowDown') dir = 1
+        if (k.key == 'ArrowLeft') dir = 2
+        if (k.key == 'ArrowUp') dir = 3
+        if ((dir - old_dir + 4) % 4 == 2) dir = old_dir
+        if (k.key == ' '){
+            reg = run
+            run = unrun
+            unrun = reg
+        }
+    }
+
+    window.addEventListener("keydown", ifkeydown)
+</script>
+
+</html>
