@@ -1,1 +1,1 @@
-# Snake game Web
+# Snake game web
