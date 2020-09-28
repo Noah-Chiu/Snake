@@ -13,14 +13,17 @@
 
 <body>
     <p id="p">hello world</p>
-    <canvas id="canvas" width="600" height="600" style="border:solid 1px navy;"></canvas>
+    <canvas id="canvas" width="600" height="600""></canvas>
 </body>
 <style>
     p {
         position: absolute;
         top: 10px ;left: 20px;
+        color: coral;
     }
     canvas{
+        background-color: lightgreen;
+        border:solid 0.6em burlywood;
         width: 600px;
         height: 600px;
     }
@@ -131,11 +134,11 @@
 
             ctx.clearRect(0, 0, width, height)
             for (i of snake) {
-                ctx.fillStyle = "brown"
+                ctx.fillStyle = "rgb(19, 92, 19)"
                 ctx.fillRect(...i, 20, 20)
             }
 
-            ctx.fillStyle = 'orange'
+            ctx.fillStyle = 'red'
             ctx.fillRect(...food, 20, 20)
 
         }
