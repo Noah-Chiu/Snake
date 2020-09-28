@@ -15,6 +15,33 @@
     <p id="p">hello world</p>
     <canvas id="canvas" width="600" height="600" style="border:solid 1px navy;"></canvas>
 </body>
+<style>
+    p {
+        position: absolute;
+        top: 10px ;left: 20px;
+    }
+    canvas{
+        width: 600px;
+        height: 600px;
+    }
+    @media (max-width: 992px), (max-height: 992px){
+        canvas {
+            width: 600px;
+            height: 600px;
+        }
+    }
+    @media (max-width: 600px), (max-height: 600px){
+        canvas {
+            width: 400px;
+            height: 400px;
+        }
+    @media (max-width: 400px), (max-height: 400px){
+        canvas {
+            width: 200px;
+            height: 200px;
+        }
+    }
+</style>
 <script>
     var p = document.getElementById("p")
     /**
